@@ -1,6 +1,6 @@
 ARG VERSION=0.0.1
 
-FROM maven:3.6.3-jdk-8 AS build-env
+FROM maven:3.9.6-eclipse-temurin-17 AS build-env
 WORKDIR /app
 
 # Copy pom and get dependencies as seperate layers
@@ -18,7 +18,7 @@ RUN mvn versions:set -DnewVersion=$VERSION
 RUN mvn --batch-mode package -DfinalName=app
 
 # Build runtime image
-FROM openjdk:8-jre-alpine
+FROM eclipse-temurin:17-jre-alpine
 EXPOSE 80
 WORKDIR /app
 COPY --from=build-env /app/target/app.jar ./app.jar
