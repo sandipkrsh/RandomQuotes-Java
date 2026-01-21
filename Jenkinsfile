@@ -35,6 +35,7 @@ pipeline {
         }
         stage('build') {
             steps {
+                echo "Updating Maven project version to 1.0.${BUILD_NUMBER}"
                 // Update the Maven project version to match the current build
                 sh(script: "mvn versions:set -DnewVersion=1.0.${BUILD_NUMBER}", returnStdout: true)
                 // Package the code
